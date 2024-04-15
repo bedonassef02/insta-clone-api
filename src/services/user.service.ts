@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../prisma';
 import { AuthDto } from '../utils/dtos/auth.dto';
-
-const prisma = new PrismaClient();
 
 export class UserService {
   async findOne(username: string) {

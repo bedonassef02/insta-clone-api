@@ -1,20 +1,48 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../prisma';
 import { CreatePostDto } from '../utils/dtos/create-post.dto';
-
-const prisma = new PrismaClient();
+import { UpdatePostDto } from '../utils/dtos/update-post.dto';
 
 export class PostService {
   async findAll(username: string): Promise<any> {
-    return prisma.post.findMany({ where: { author: { username } } });
+    const author: any = await prisma.user.findUnique({
+      where: { username },
+      select: { id: true },
+    });
+
+    return prisma.post.findMany({ where: { authorId: author.id } });
   }
 
-  async create(postDto: CreatePostDto, authorId: number) {
+  async findOne(id: number): Promise<any> {
+    return prisma.post.findUnique({
+      where: { id },
+      include: {
+        comments: true,
+      },
+    });
+  }
+
+  async create(postDto: CreatePostDto) {
     return prisma.post.create({
       data: {
         title: postDto.title,
         content: postDto.content,
-        authorId,
+        authorId: postDto.authorId,
       },
+    });
+  }
+
+  async update(postDto: UpdatePostDto) {
+    return prisma.post.update({
+      where: { id: postDto.id },
+      data: {
+        content: postDto.content,
+      },
+    });
+  }
+
+  async remove(id: number) {
+    await prisma.post.delete({
+      where: { id },
     });
   }
 }

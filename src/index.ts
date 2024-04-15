@@ -1,7 +1,7 @@
 process.loadEnvFile('.env');
 import express from 'express';
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
-import { resolvers } from './graphql/resolvers';
+import { resolvers } from './graphql';
 import { typeDefs } from './graphql/schema';
 
 const app: any = express();

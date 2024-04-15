@@ -2,8 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UserService } from './user.service';
 import { AuthDto } from '../utils/dtos/auth.dto';
-
-const JWT_SECRET: string = process.env.JWT_SECRET as string;
+import { JWT_SECRET } from '../utils/constants';
 
 export class AuthService {
   constructor(private readonly userService: UserService) {}
@@ -17,7 +16,7 @@ export class AuthService {
     if (!valid) {
       throw new Error('Invalid username or password');
     }
-    return jwt.sign({ userId: user.id }, JWT_SECRET);
+    return this.generateResponse(user);
   }
 
   async register(registerDto: AuthDto) {
@@ -28,6 +27,18 @@ export class AuthService {
     }
     registerDto.password = await bcrypt.hash(registerDto.password, 10);
     const user = await this.userService.create(registerDto);
-    return jwt.sign({ userId: user.id }, JWT_SECRET);
+    return this.generateResponse(user);
+  }
+
+  private generateResponse(user: any) {
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+    return {
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        profile: user.profile.id,
+      },
+    };
   }
 }
