@@ -6,7 +6,7 @@ export const typeDefs = gql`
     username: String!
     password: String!
     profile: Profile
-    posts: [Post!]! 
+    posts: [Post!]!
   }
 
   type Profile {
@@ -22,16 +22,19 @@ export const typeDefs = gql`
     author: User!
   }
 
+  type Auth {
+    token: String!
+  }
+
   type Query {
     users: [User!]!
-    user(id: Int!): User
-    posts: [Post!]!
+    user(username: String!): User
+    posts(username: String!): [Post!]!
   }
-  
 
   type Mutation {
     register(username: String!, password: String!): String
     login(username: String!, password: String!): String
-    createPost(title: String!, content: String!): Post 
+    createPost(title: String!, content: String!): Post
   }
 `;

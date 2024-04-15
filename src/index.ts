@@ -1,4 +1,4 @@
-process.loadEnvFile('.env')
+process.loadEnvFile('.env');
 import express from 'express';
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import { resolvers } from './graphql/resolvers';

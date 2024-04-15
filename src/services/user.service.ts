@@ -5,7 +5,13 @@ const prisma = new PrismaClient();
 
 export class UserService {
   async findOne(username: string) {
-    return await prisma.user.findUnique({ where: { username } });
+    return await prisma.user.findUnique({
+      where: { username },
+      include: {
+        profile: true,
+        posts: true,
+      },
+    });
   }
 
   async findById(id: number) {

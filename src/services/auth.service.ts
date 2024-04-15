@@ -20,7 +20,7 @@ export class AuthService {
     return jwt.sign({ userId: user.id }, JWT_SECRET);
   }
 
-  async register(registerDto:AuthDto) {
+  async register(registerDto: AuthDto) {
     const existingUser = await this.userService.findOne(registerDto.username);
 
     if (existingUser) {
