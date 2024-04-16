@@ -3,18 +3,21 @@ import {
   commentMutationResolver,
   commentQueryResolver,
 } from './resolvers/comment.resolver';
-import { postMutationResolver, postQueryResolver } from './resolvers/post.resolver';
+import {
+  postMutationResolver,
+  postQueryResolver,
+} from './resolvers/post.resolver';
 import { userQueryResolver } from './resolvers/user.resolver';
 
 export const resolvers = {
   Query: {
     ...userQueryResolver,
     ...commentQueryResolver,
-    ...postQueryResolver
+    ...postQueryResolver,
   },
   Mutation: {
     ...authMutationResolver,
     ...commentMutationResolver,
-    ...postMutationResolver
+    ...postMutationResolver,
   },
 };

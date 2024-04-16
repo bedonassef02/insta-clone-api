@@ -5,8 +5,7 @@ import { commentService } from '../../utils/ioc/services.ioc';
 
 export const commentQueryResolver = {
   comments: async (_: any, { postId }: { postId: number }) => {
-    const comments = await commentService.findAll(postId);
-    return comments;
+    return await commentService.findAll(postId);
   },
 };
 
@@ -17,15 +16,10 @@ export const commentMutationResolver = {
     context: ContextDto,
   ) => {
     try {
-      const userId: number = getCurrentUserId(context.req) as number;
-      commentDto.authorId = userId;
+      commentDto.authorId = getCurrentUserId(context.req) as number;
 
-      // Call the create method from the comment service
-      const newComment = await commentService.create(commentDto);
-
-      return newComment;
+      return await commentService.create(commentDto);
     } catch (error) {
-      // Handle any errors, e.g., logging or returning an error message
       console.error('Error creating comment:', error);
       throw new Error('Failed to create comment');
     }

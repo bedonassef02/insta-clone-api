@@ -1,25 +1,8 @@
-import jwt from 'jsonwebtoken';
 import { Request } from 'express';
-import { JWT_SECRET } from '../utils/constants';
+import { getCurrentUser } from './get-current-user';
 
 export const getCurrentUserId = (req: Request): number | null => {
-  const token = req.headers.authorization;
+  const user = getCurrentUser(req);
 
-  if (token) {
-    try {
-
-      const decodedToken: any = jwt.verify(
-        token,
-        JWT_SECRET
-      );
-
-      const userId = decodedToken.userId;
-
-      return userId;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  return null;
+  return user ? user.id : null;
 };

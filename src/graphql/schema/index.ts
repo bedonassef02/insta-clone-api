@@ -11,6 +11,7 @@ import { CommentQuery } from './queries/comment-queries.graphql';
 import { AuthMutation } from './mutations/auth-mutations.graphql';
 import { PostMutation } from './mutations/post-mutations.graphql';
 import { CommentMutation } from './mutations/comment-mutations.graphql';
+import { Payload } from './types/payload.graphql';
 
 export const typeDefs = gql`
   ${User}
@@ -18,6 +19,7 @@ export const typeDefs = gql`
   ${Post}
   ${Comment}
   ${Auth}
+  ${Payload}
 
   ${CreateCommentInput}
 

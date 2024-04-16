@@ -3,4 +3,4 @@ export const User = `type User {
   username: String!
   profile: Profile
   posts: [Post!]!
-}`
+}`;

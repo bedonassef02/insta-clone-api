@@ -4,4 +4,4 @@ export const Post = `type Post {
   content: String!
   author: User!
   comments: [Comment!]!
-}`
+}`;

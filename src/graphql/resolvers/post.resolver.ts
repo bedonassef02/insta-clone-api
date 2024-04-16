@@ -6,30 +6,21 @@ import { postService } from '../../utils/ioc/services.ioc';
 
 export const postQueryResolver = {
   posts: async (_: any, { username }: { username: string }) => {
-    const posts = await postService.findAll(username);
-    return posts;
+    return await postService.findAll(username);
   },
   post: async (_: any, { id }: { id: number }) => {
-    const post = await postService.findOne(id);
-    return {
-      ...post,
-      author: post ? post.author : undefined,
-    };
+    return await postService.findOne(id);
   },
 };
 
 export const postMutationResolver = {
   createPost: async (_: any, postDto: CreatePostDto, context: ContextDto) => {
-    const userId: number = getCurrentUserId(context.req) as number;
-    postDto.authorId = userId;
+    postDto.authorId = getCurrentUserId(context.req) as number;
 
     return postService.create(postDto);
   },
 
-  updatePost: async (
-    _: any,
-    postDto: UpdatePostDto,
-  ) => {
+  updatePost: async (_: any, postDto: UpdatePostDto) => {
     return postService.update(postDto);
   },
 
